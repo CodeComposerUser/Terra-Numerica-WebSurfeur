@@ -1,0 +1,131 @@
+.configuration {
+    .header {
+        padding: 1em;
+        display: flex;
+
+        h1 {
+            margin: auto;
+        }
+
+        .btns {
+            align-self: center;
+
+            button {
+                padding: 1em;
+                margin: 0 .5em;
+            }
+        }
+    }
+
+    .menu {
+        display: flex;
+
+        .board-conf {
+            width: 50%;
+
+            .board-options {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .options {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+
+                    .option {
+                        padding: 1em;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+
+                        img {
+                            min-width: 100px;
+                            min-height: 100px;
+                        }
+                    }
+                }
+            }
+
+            .params {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .form {
+
+                    .input-field {
+                        margin: 1em;
+
+                        label {
+                            width: 10em;
+                        }
+
+                        input {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        .game-params {
+            width: 50%;
+
+            .opponent {
+                padding: 1em;
+
+                .type {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .options {
+                        display: flex;
+                        justify-content: center;
+                        width: 100%;
+
+                        .opponent-type {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            width: 50%;
+                        }
+                    }
+                }
+
+                .side {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .options {
+                        display: flex;
+                        justify-content: center;
+                        width: 100%;
+
+                        .option {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            width: 50%;
+                        }
+                    }
+                }
+            }
+
+            .collect {
+                padding: 1em;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+            }
+        }
+    }
+
+}
+
+img {
+    width: 6em;
+}

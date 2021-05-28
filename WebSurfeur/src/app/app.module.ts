@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ConfigurationMenuComponent } from './configuration-menu/configuration-menu.component';
-import { GameModeMenuComponent } from './game-mode-menu/game-mode-menu.component';
+import { ConfigurationMenuComponent } from './components/configuration-menu/configuration-menu.component';
+import { GameModeMenuComponent } from './components/game-mode-menu/game-mode-menu.component';
+import { GameService } from './services/game/game.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { GameModeMenuComponent } from './game-mode-menu/game-mode-menu.component
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    GameService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
