@@ -144,10 +144,8 @@ export class ConfigurationMenuComponent implements OnInit {
     this.gameService.board_conf = this.selected_configuration;
     this.gameService.opponent_type = this.selected_opponent_type;
     this.gameService.player_side = this.player_side;
-    const params: number[] = []
-
-    this.gameService.board_params = params;
-    //this.router.navigate(['/board'])
+    this.gameService.board_params = [this.param1, this.param2];
+    this.router.navigate(['/board'])
   }
 
 }
