@@ -4,7 +4,7 @@
         <h1>Configuration de partie</h1>
         <div class="btns">
             <button (click)="displayRules()">Règles</button>
-            <button>Commencer</button>
+            <button (click)="startGame()">Commencer</button>
         </div>
     </div>
     <div class="menu">
@@ -13,32 +13,33 @@
                 <h3>Choisissez un plateau</h3>
 
                 <div class="options">
-                    <div class="option card">
+                    <div *ngFor="let conf of configurations" (click)="selectConfiguration(conf)" class="option card"
+                        [class]="isSelectedConfiguration(conf)">
                         <img src="assets/tree.svg">
-                        Arbre
-                    </div>
-                    <div class="option card">
-                        <img src="assets/tree.svg">
-                        Configuration 2
-                    </div>
-                    <div class="option card">
-                        <img src="assets/tree.svg">
-                        Configuration 3
+                        {{getConfigurationName(conf)}}
                     </div>
                 </div>
             </div>
 
             <div class="params">
                 <h3>Paramètres supplémentaires</h3>
-                
+
                 <div class="form">
                     <div class="input-field">
                         <label for="param1">Paramètre 1 : </label>
-                        <input type="number" name="param1">
+                        <input type="number" name="param1"
+                            [min]="configuration_param_boundaries[selected_configuration].param1.min"
+                            [max]="configuration_param_boundaries[selected_configuration].param1.max"
+                            [value]="param1"
+                            (blur)="checkValueRightness($event)">
                     </div>
-                    <div class="input-field">
-                        <label for="param1">Paramètre 2 : </label>
-                        <input type="number" name="param1">
+                    <div *ngIf="param2 !== -1" class="input-field">
+                        <label for="param2">Paramètre 2 : </label>
+                        <input type="number" name="param2"
+                            [min]="configuration_param_boundaries[selected_configuration].param2!.min"
+                            [max]="configuration_param_boundaries[selected_configuration].param2!.max"
+                            [value]="param2"
+                            (blur)="checkValueRightness($event)">
                     </div>
                 </div>
             </div>
@@ -50,27 +51,21 @@
                 <div class="type">
                     <h3>Choisissez votre type adversaire</h3>
                     <div class="options">
-                        <div class="opponent-type card">
-                            <img src="assets/vs_ai.svg">
-                            Jouer contre un ordinateur
-                        </div>
-                        <div class="opponent-type card">
-                            <img src="assets/vs_player.svg">
-                            Jouer à 2 joueurs
+                        <div *ngFor="let type of opponent_types" (click)="selectOpponentType(type)"
+                            class="opponent-type card" [class]="isSelectedOpponentType(type)">
+                            <img src="assets/vs_{{type}}.svg">
+                            {{getOpponentTypeMessage(type)}}
                         </div>
                     </div>
                 </div>
 
-                <div class="side">
+                <div *ngIf="isOnePlayerGame()" class="side">
                     <h3>Choisissez votre camp</h3>
                     <div class="options">
-                        <div class="option card">
-                            <img src="assets/goat.svg">
-                            Jouer contre un ordinateur
-                        </div>
-                        <div class="option card">
-                            <img src="assets/harvest.svg">
-                            Jouer à 2 joueurs
+                        <div *ngFor="let side of sides" (click)="selectSide(side)" class="option card"
+                            [class]="isSelectedSide(side)">
+                            <img src="assets/{{side}}.svg">
+                            {{getSideName(side)}}
                         </div>
                     </div>
                 </div>
@@ -80,7 +75,10 @@
                 <h3>Choisissez la vitesse de récolte</h3>
                 <div class="input-field">
                     <label for="speed">Vitesse de récolte : </label>
-                    <input type="number" name="speed">
+                    <input min="1" type="number" name="speed"
+                        min="1"
+                        value="1"
+                        (blur)="checkValueRightness($event)">
                 </div>
             </div>
         </div>
