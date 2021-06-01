@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { GameService } from 'src/app/services/game/game.service';
 
 @Component({
   selector: 'app-board',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private gameService: GameService) { }
 
   ngOnInit(): void {
+    console.log('INIT')
+  }
+
+  replay(): void {
+    this.ngOnInit();
+    /* this.router.navigate(['/board']) */
+  }
+
+  goBackToMenu(): void {
+    this.router.navigate(['/configuration']);
   }
 
 }
