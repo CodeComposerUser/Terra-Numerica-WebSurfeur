@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ParamBoundary } from 'src/app/models/param-boundary.model';
 import { GameService } from 'src/app/services/game/game.service';
+import { GraphService } from 'src/app/services/graph/graph.service';
 
 @Component({
   selector: 'app-configuration-menu',
@@ -12,18 +13,18 @@ export class ConfigurationMenuComponent implements OnInit {
 
   public configurations = ['tree', 'conf2', 'conf3'];
   public selected_configuration: string = 'tree';
-  public configuration_param_boundaries: { [index: string] : {param1: ParamBoundary, param2: ParamBoundary | undefined}} = {
+  public configuration_param_boundaries: { [index: string]: { param1: ParamBoundary, param2: ParamBoundary | undefined } } = {
     tree: {
-      param1: {min: 2, max: 10},
-      param2: {min: 1, max: 10}
+      param1: { min: 2, max: 25 },
+      param2: { min: 1, max: 10 }
     },
     conf2: {
-      param1: {min: 2, max: 5},
+      param1: { min: 2, max: 20 },
       param2: undefined
     },
     conf3: {
-      param1: {min: 2, max: 5},
-      param2: {min: 1, max: 10}
+      param1: { min: 2, max: 15 },
+      param2: { min: 1, max: 10 }
     }
   }
   public param1: number = 0;
@@ -35,7 +36,7 @@ export class ConfigurationMenuComponent implements OnInit {
   public sides = ['goat', 'harvest'];
   private player_side = 'goat';
 
-  constructor(private gameService: GameService, private router: Router) { }
+  constructor(private gameService: GameService, private router: Router, private graphService: GraphService) { }
 
   ngOnInit(): void {
     this.initParams();
@@ -43,7 +44,7 @@ export class ConfigurationMenuComponent implements OnInit {
 
   private initParams(): void {
     this.param1 = this.configuration_param_boundaries[this.selected_configuration].param1.min;
-    if(this.configuration_param_boundaries[this.selected_configuration].param2 !== undefined) {
+    if (this.configuration_param_boundaries[this.selected_configuration].param2 !== undefined) {
       this.param2 = this.configuration_param_boundaries[this.selected_configuration].param2!.min;
     } else { this.param2 = -1 }
   }
@@ -76,18 +77,44 @@ export class ConfigurationMenuComponent implements OnInit {
     return this.selected_configuration === configuration ? 'selected' : ''
   }
 
-  /* Functions for inputs boundaries */
+  /* Functions for inputs */
 
   checkValueRightness(event: FocusEvent) {
     const target = event.target as any
-    if(target.value !== '') {
-      if(+target.value < target.min) {
+    if (target.value !== '') {
+      if (+target.value < target.min) {
         target.value = target.min;
-      } else if(target.max !== '' && +target.value > target.max) {
+      } else if (target.max !== '' && +target.value > target.max) {
         target.value = target.max;
       }
     } else {
       target.value = target.min;
+    }
+  }
+
+  getParam1Name() {
+    switch (this.selected_configuration) {
+      case 'tree':
+        return 'Nombre de noeuds :';
+      case 'conf2':
+        return 'Nombre de noeuds :';
+      case 'conf3':
+        return 'Nombre de noeuds :';
+      default:
+        return 'Unknown but usefeul (I think)'
+    }
+  }
+
+  getParam2Name() {
+    switch (this.selected_configuration) {
+      case 'tree':
+        return 'Arité :';
+      case 'conf2':
+        return 'Arité :';
+      case 'conf3':
+        return 'Arité :';
+      default:
+        return 'Unknown but usefeul (I think)'
     }
   }
 
@@ -115,7 +142,7 @@ export class ConfigurationMenuComponent implements OnInit {
   isOnePlayerGame(): boolean {
     return this.selected_opponent_type === 'ai'
   }
-  
+
   /* Functions for side selection */
 
   getSideName(side: string): string {
@@ -144,7 +171,9 @@ export class ConfigurationMenuComponent implements OnInit {
     this.gameService.board_conf = this.selected_configuration;
     this.gameService.opponent_type = this.selected_opponent_type;
     this.gameService.player_side = this.player_side;
-    this.gameService.board_params = [this.param1, this.param2];
+    const params = [this.param1, this.param2]
+    this.gameService.board_params = params;
+    this.graphService.generateGraph(this.selected_configuration, params)
     this.router.navigate(['/board'])
   }
 

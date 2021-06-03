@@ -26,19 +26,19 @@
 
                 <div class="form">
                     <div class="input-field">
-                        <label for="param1">Paramètre 1 : </label>
+                        <label for="param1">{{getParam1Name()}}</label>
                         <input type="number" name="param1"
                             [min]="configuration_param_boundaries[selected_configuration].param1.min"
                             [max]="configuration_param_boundaries[selected_configuration].param1.max"
-                            [value]="param1"
+                            [(ngModel)]="param1"
                             (blur)="checkValueRightness($event)">
                     </div>
                     <div *ngIf="param2 !== -1" class="input-field">
-                        <label for="param2">Paramètre 2 : </label>
+                        <label for="param2">{{getParam2Name()}}</label>
                         <input type="number" name="param2"
                             [min]="configuration_param_boundaries[selected_configuration].param2!.min"
                             [max]="configuration_param_boundaries[selected_configuration].param2!.max"
-                            [value]="param2"
+                            [(ngModel)]="param2"
                             (blur)="checkValueRightness($event)">
                     </div>
                 </div>

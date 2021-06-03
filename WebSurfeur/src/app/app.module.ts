@@ -7,6 +7,7 @@ import { ConfigurationMenuComponent } from './components/configuration-menu/conf
 import { GameModeMenuComponent } from './components/game-mode-menu/game-mode-menu.component';
 import { GameService } from './services/game/game.service';
 import { BoardComponent } from './components/board/board.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { BoardComponent } from './components/board/board.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     GameService,
