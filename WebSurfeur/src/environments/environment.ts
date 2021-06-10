@@ -2,8 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { PawnStateOnTurn } from "src/app/models/PawnState/PawnStateOnTurn/pawn-state-on-turn";
+import { PawnStateWaitingTurn } from "src/app/models/PawnState/PawnStateWaitingTurn/pawn-state-waiting-turn";
+
 export const environment = {
-  production: false
+  production: false,
+  pawnWaitingTurn: new PawnStateWaitingTurn(),
+  pawnOnTurn: new PawnStateOnTurn()
 };
 
 /*

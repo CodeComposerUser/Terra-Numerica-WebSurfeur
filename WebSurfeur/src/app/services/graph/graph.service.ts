@@ -31,6 +31,7 @@ export class GraphService {
         this.graph = this.generateTree(args[0], args[1]);
         break;
     }
+    return this.graph;
   }
 
   generatesNodes(n: number): any[] {

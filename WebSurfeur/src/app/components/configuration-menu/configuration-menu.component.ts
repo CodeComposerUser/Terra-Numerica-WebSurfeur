@@ -36,6 +36,10 @@ export class ConfigurationMenuComponent implements OnInit {
   public sides = ['goat', 'harvest'];
   private player_side = 'goat';
 
+  public collect_speed = 1;
+
+  public selected_level = 'easy';
+
   constructor(private gameService: GameService, private router: Router, private graphService: GraphService) { }
 
   ngOnInit(): void {
@@ -164,16 +168,23 @@ export class ConfigurationMenuComponent implements OnInit {
     return this.player_side === side ? 'selected' : '';
   }
 
+  /* Functions for the level selection */
+
+  isSelectedLevel(level: string): string {
+    return this.selected_level === level ? 'selected' : '';
+  }
+
   /* Start game function */
 
   startGame() {
-    console.log('Starting game')
     this.gameService.board_conf = this.selected_configuration;
     this.gameService.opponent_type = this.selected_opponent_type;
     this.gameService.player_side = this.player_side;
     const params = [this.param1, this.param2]
     this.gameService.board_params = params;
-    this.graphService.generateGraph(this.selected_configuration, params)
+    this.gameService.graph = this.graphService.generateGraph(this.selected_configuration, params);
+    this.gameService.collect_speed = this.collect_speed;
+    
     this.router.navigate(['/board'])
   }
 

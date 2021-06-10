@@ -41,11 +41,10 @@ export abstract class Graph {
                 .attr("r", 20)
                 .attr("class", "circle")
                 .attr("index", (d: any) => d.index)
-                .style("fill", "#69b3a2")
+                .style("fill", "#4585C3")
                 .call(
                     d3.drag()
                     .on('start', (event: DragEvent) => {
-                        console.log('OTHER')
                         this.dragstarted(event)
                     })
                     .on('drag', (event: DragEvent) => {

@@ -77,8 +77,30 @@
                     <label for="speed">Vitesse de récolte : </label>
                     <input min="1" type="number" name="speed"
                         min="1"
-                        value="1"
+                        [(ngModel)]="collect_speed"
                         (blur)="checkValueRightness($event)">
+                </div>
+            </div>
+
+            <div class="level card">
+                <h3>Choisissez le niveau de difficulté</h3>
+                <div class="level-selection-list">
+                    <div class="level-selection-list-item" [class]="isSelectedLevel('easy')">
+                        <label for="mode1">Facile</label>
+                        <input [(ngModel)]="selected_level" type="radio" id="mode1" name="mode" value="easy">
+                    </div>
+                    <div class="level-selection-list-item" [class]="isSelectedLevel('medium')">
+                        <label for="mode2">Normal</label>
+                        <input [(ngModel)]="selected_level" type="radio" id="mode2" name="mode" value="medium">
+                    </div>
+                    <div class="level-selection-list-item" [class]="isSelectedLevel('hard')">
+                        <label for="mode3">Difficile</label>
+                        <input [(ngModel)]="selected_level" type="radio" id="mode3" name="mode" value="hard">
+                    </div>
+                    <div class="level-selection-list-item" [class]="isSelectedLevel('extreme')">
+                        <label for="mode4">Extrême</label>
+                        <input [(ngModel)]="selected_level" type="radio" id="mode4" name="mode" value="extreme">
+                    </div>
                 </div>
             </div>
         </div>
