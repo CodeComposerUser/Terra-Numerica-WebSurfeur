@@ -12,6 +12,7 @@ export class GraphService {
   constructor() { }
 
   drawGraph(svg: any): void {
+    /* console.log('GRAPH', this.graph); */
     this.graph?.draw(svg);
   }
 

@@ -22,40 +22,30 @@ export class BoardComponent implements OnInit {
               private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.gameService.reset()
+    this.renderer.setStyle(this.visualiser?.nativeElement, 'visibility', 'hidden')
+    this.gameService.reset();
     const width = this.visualiser?.nativeElement.offsetWidth;
     const height = this.visualiser?.nativeElement.offsetHeight;
     /* console.log('Visu', this.visualiser) */
-    this.renderer.setStyle(this.visualiser?.nativeElement, 'visibility', 'hidden')
     this.svg = d3.select('#visualiser')
       .append('svg')
         .attr('id', 'mainBoard')
         .attr('width', width)
         .attr('height', height);
     this.graphService.drawGraph(this.svg);
+
     setTimeout(() => {
       this.gameService.startGame(this.svg)
-      this.renderer.setStyle(this.visualiser?.nativeElement, 'visibility', 'visible')
-      /* d3.select('#details-informations')
-        .style('color', 'brown')
-        .text(() => 'C\'est au tour de la chèvre de jouer') */
-    }, 3000)
-    /* this.svg.append('circle')
-      .attr('fill', 'url(#goat)')
-      .attr('cx', 100)
-      .attr('cy', 100)
-      .attr('r', 40)
-      
-    this.svg.append('circle')
-      .attr('fill', 'url(#cabbage)')
-      .attr('cx', 100)
-      .attr('cy', 200)
-      .attr('r', 40) */
+      this.renderer.setStyle(this.visualiser?.nativeElement, 'visibility', 'visible');
+      this.gameService.setReplayCallback(this.replay.bind(this));
+    }, 2000)
   }
 
   replay(): void {
     this.clearSvg();
-    this.ngOnInit();
+    setTimeout(() => {
+      this.ngOnInit();
+    }, 500)
   }
 
   goBackToMenu(): void {
@@ -63,7 +53,8 @@ export class BoardComponent implements OnInit {
   }
 
   private clearSvg(): void {
-    d3.selectAll('svg').remove();
+    this.renderer.setStyle(this.visualiser?.nativeElement, 'visibility', 'hidden')
+    this.svg.remove();
   }
 
   validateTurn() {

@@ -91,6 +91,10 @@
                             align-items: center;
                             width: 50%;
                         }
+
+                        .ai {
+                            background-color: #b7b7b7;
+                        }
                     }
                 }
 
@@ -134,7 +138,11 @@
 
                     .level-selection-list-item {
                         text-align: center;
-                        width: 25%;
+                        flex: 1;
+
+                        input[type="radio"] {
+                            display: none;
+                        }
                     }
                 }
             }

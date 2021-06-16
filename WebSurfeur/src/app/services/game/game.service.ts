@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import * as d3 from 'd3';
 import { Pawn } from 'src/app/models/Pawn/pawn';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,9 @@ export class GameService {
   private cabbage_positions: {index: number, x: number, y: number}[] = [];
   private collected_cabbages: any[] = []
 
-  constructor() { }
+  private replayCallback: () => void = () => {};
+
+  constructor(private router: Router) { }
 
   /* Functions for game */
 
@@ -54,7 +57,6 @@ export class GameService {
         .attr('index', node.index)
         .attr('id', `cabbage${node.index}`)
         .on('click', (event: Event) => {
-          // console.log('Event', event);
           this.handleClickOnCabbage(event.target!)
         })
       this.cabbage_positions.push(node);
@@ -77,7 +79,7 @@ export class GameService {
         .attr('id', 'collect-limit')
         .style('color', 'red')
         .text(() => "Ce n'est pas au tour du collecteur de choux")
-      return
+      return;
     }
     
     const selected_target = d3.select(target as any)
@@ -133,7 +135,7 @@ export class GameService {
     return this.goat_win || this.cabbage_positions.length === 0;
   }
 
-  updateGoatPosition(new_goat_position: {index: number, x: number, y: number}) {
+  private updateGoatPosition(new_goat_position: {index: number, x: number, y: number}) {
     this.goat_position = {...new_goat_position}
     const idx = this.cabbage_positions.findIndex(n => n.index === new_goat_position.index)
     if(idx !== -1) {
@@ -151,11 +153,22 @@ export class GameService {
     }
 
     if(this.checkEnd()) {
-      if(this.goat_win) {
-        Swal.fire('Fin de partie', 'La chèvre a gagner !', 'success');
-      } else {
-        Swal.fire('Fin de partie', 'Le collecteur de choux a gagné', 'success');
-      }
+      const message = this.goat_win ? 'La chèvre a gagner !' : 'Le collecteur de choux a gagné !'
+      Swal.fire({
+        title : 'Fin de partie',
+        icon: 'success',
+        text: message,
+        showDenyButton: true,
+        denyButtonText: 'Retour au menu',
+        confirmButtonText: 'Rejouer',
+      }).then((result) => {
+        if(result.isDenied) {
+          this.router.navigate(['/configuration']);
+        } else if(result.isConfirmed) {
+          this.replayCallback();
+        }
+      })
+
     }
 
     this.goat_turn = !this.goat_turn;
@@ -163,7 +176,6 @@ export class GameService {
   }
 
 private collectCabbages() {
-  /* console.log('COLLECTING CABBAGE'); */
   for(const cabbage of this.collected_cabbages) {
     const idx = this.cabbage_positions.findIndex(c =>{
       return c.index == cabbage.attr('index') 
@@ -229,8 +241,14 @@ private collectCabbages() {
 
   set collect_speed(speed: number) { this._collect_speed = speed; }
 
+  setReplayCallback(callback: () => void) {
+    this.replayCallback = callback;
+  }
+
   reset() {
     this.goat_win = false;
+    this.cabbage_positions = [];
+    this.collected_cabbages = [];
   }
 
 }

@@ -136,11 +136,15 @@ export class ConfigurationMenuComponent implements OnInit {
   }
 
   selectOpponentType(type: string) {
-    this.selected_opponent_type = type;
+    if(type !== 'ai') {
+      this.selected_opponent_type = type;
+    } else {
+      alert('L\'option sélectionnée n\'est pas disponible.')
+    }
   }
 
   isSelectedOpponentType(type: string): string {
-    return this.selected_opponent_type === type ? 'selected' : '';
+    return this.selected_opponent_type === type ? `selected ${type}` : type;
   }
 
   isOnePlayerGame(): boolean {
