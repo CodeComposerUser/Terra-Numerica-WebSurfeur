@@ -42,6 +42,9 @@ export class BoardComponent implements OnInit {
   }
 
   replay(): void {
+    d3.select('#details-informations')
+          .style('color', `black`)
+          .text(() => "Chargement du plateau de jeu...");
     this.clearSvg();
     setTimeout(() => {
       this.ngOnInit();
