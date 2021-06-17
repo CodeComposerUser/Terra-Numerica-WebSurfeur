@@ -57,6 +57,10 @@ export class ConfigurationMenuComponent implements OnInit {
     this.gameService.displayRules()
   }
 
+  goBack() {
+    this.router.navigate(['/game-mode-selection'])
+  }
+
   /* Functions for board configuration selection */
 
   getConfigurationName(configuration: string): string {
