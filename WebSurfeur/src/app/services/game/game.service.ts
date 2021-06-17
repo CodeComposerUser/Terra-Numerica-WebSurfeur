@@ -26,7 +26,10 @@ export class GameService {
 
   private goat_position: {x: number, y: number} = { x: -1, y: -1 };
   private cabbage_positions: {index: number, x: number, y: number}[] = [];
-  private collected_cabbages: any[] = []
+  private collected_cabbages: any[] = [];
+
+  private collector_color = '#4dc738';
+  private goat_color = '#b56528'
 
   private replayCallback: () => void = () => {};
 
@@ -112,11 +115,11 @@ export class GameService {
     } else {
       if(this.goat_turn === true) {
         d3.select('#details-informations')
-          .style('color', 'brown')
+          .style('color', `${this.goat_color}`)
           .text(() => "C'est au tour de la chèvre")
       } else if(!this.goat_turn) {
         d3.select('#details-informations')
-          .style('color', 'green')
+          .style('color', `${this.collector_color}`)
           .text(() => "C'est au tour du collecteur de choux");
         this.displayCollectCount();
       }
@@ -193,13 +196,14 @@ private collectCabbages() {
   /* Functions use to display the rules */
 
   private getRulesHtml() {
-    return 'Need to add the rules...';
+    return `<p>Dans ce jeu, deux camps s'affrontent : <span style='color: ${this.goat_color}'>la chèvre</span> et <span style='color: ${this.collector_color}'>le collecteur de choux</span>.</p><p>Le but de <span style='color: ${this.goat_color}'>la chèvre</span> est de manger un des choux présent sur le plateau de jeu.</p><p>Le but <span style='color: ${this.collector_color}'>du collecteur de choux</span> est de récolter tous les choux présent sur le plateau de jeu avant que la chèvre ne puisse en manger un.</p>`
+      + `<br/><p>Le jeu se déroule au tout par tour. Après que <span style='color: ${this.goat_color}'>la chèvre</span> est placée sur le point de départ, <span style='color: ${this.collector_color}'>le collecteur de choux</span> commence à récolter les choux. <span style='color: ${this.goat_color}'>La chèvre</span> peut se déplacer d'un sommet par tour en suivant les arêtes.</p><p><span style='color: ${this.collector_color}'>Le collecteur de choux</span> peut récolter, par tour, un nombre de choux égal à sa vitesse de récolte.</p>`;
   }
 
   displayRules() {
     Swal.fire({
       icon: 'info',
-      text: this.getRulesHtml()
+      html: this.getRulesHtml()
     })
   }
 
