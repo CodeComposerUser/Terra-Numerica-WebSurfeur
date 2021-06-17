@@ -38,7 +38,7 @@ export class BoardComponent implements OnInit {
       this.gameService.startGame(this.svg)
       this.renderer.setStyle(this.visualiser?.nativeElement, 'visibility', 'visible');
       this.gameService.setReplayCallback(this.replay.bind(this));
-    }, 2000)
+    }, 3000)
   }
 
   replay(): void {
