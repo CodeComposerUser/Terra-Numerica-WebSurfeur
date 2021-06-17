@@ -77,12 +77,16 @@ export class ConfigurationMenuComponent implements OnInit {
   }
 
   selectConfiguration(configuration: string) {
-    this.selected_configuration = configuration;
+    if(!configuration.includes('conf')) {
+      this.selected_configuration = configuration;
+    }
     this.initParams();
   }
 
   isSelectedConfiguration(configuration: string): string {
-    return this.selected_configuration === configuration ? 'selected' : ''
+    let classes = this.selected_configuration === configuration ? 'selected' : ''
+    classes += ` ${configuration.includes('conf') ? 'disabled' : ''}`
+    return classes
   }
 
   /* Functions for inputs */

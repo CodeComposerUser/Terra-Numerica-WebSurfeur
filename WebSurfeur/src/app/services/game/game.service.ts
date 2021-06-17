@@ -178,19 +178,19 @@ export class GameService {
     this.update()
   }
 
-private collectCabbages() {
-  for(const cabbage of this.collected_cabbages) {
-    const idx = this.cabbage_positions.findIndex(c =>{
-      return c.index == cabbage.attr('index') 
-    })
-    
-    if(idx !== -1) {
-      this.cabbage_positions.splice(idx, 1)
-      cabbage.remove();
+  private collectCabbages() {
+    for(const cabbage of this.collected_cabbages) {
+      const idx = this.cabbage_positions.findIndex(c =>{
+        return c.index == cabbage.attr('index') 
+      })
+      
+      if(idx !== -1) {
+        this.cabbage_positions.splice(idx, 1)
+        cabbage.remove();
+      }
     }
+    this.collected_cabbages = []
   }
-  this.collected_cabbages = []
-}
 
 
   /* Functions use to display the rules */
