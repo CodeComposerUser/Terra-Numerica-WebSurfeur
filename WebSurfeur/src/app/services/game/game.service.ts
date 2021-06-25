@@ -156,7 +156,8 @@ export class GameService {
     }
 
     if(this.checkEnd()) {
-      const message = this.goat_win ? 'La chèvre a gagner !' : 'Le collecteur de choux a gagné !'
+      const message = this.goat_win ? 'La chèvre a gagnée !' : 'Le collecteur de choux a gagné !'
+      const img_url = this.goat_win ? 'assets/goat.png' : 'assets/harvest.png'
       Swal.fire({
         title : 'Fin de partie',
         icon: 'success',
@@ -164,6 +165,8 @@ export class GameService {
         showDenyButton: true,
         denyButtonText: 'Retour au menu',
         confirmButtonText: 'Rejouer',
+        imageUrl: img_url,
+        imageHeight: '10em'
       }).then((result) => {
         if(result.isDenied) {
           this.router.navigate(['/configuration']);
