@@ -8,13 +8,15 @@ import { GameModeMenuComponent } from './components/game-mode-menu/game-mode-men
 import { GameService } from './services/game/game.service';
 import { BoardComponent } from './components/board/board.component';
 import { FormsModule } from '@angular/forms';
+import { CreditComponent } from './components/credit/credit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConfigurationMenuComponent,
     GameModeMenuComponent,
-    BoardComponent
+    BoardComponent,
+    CreditComponent
   ],
   imports: [
     BrowserModule,
