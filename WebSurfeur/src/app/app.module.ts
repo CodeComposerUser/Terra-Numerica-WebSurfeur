@@ -6,9 +6,9 @@ import { AppComponent } from './app.component';
 import { ConfigurationMenuComponent } from './components/configuration-menu/configuration-menu.component';
 import { GameModeMenuComponent } from './components/game-mode-menu/game-mode-menu.component';
 import { GameService } from './services/game/game.service';
-import { BoardComponent } from './components/board/board.component';
 import { FormsModule } from '@angular/forms';
 import { CreditComponent } from './components/credit/credit.component';
+import { BoardComponent } from './components/board/board.component';
 
 @NgModule({
   declarations: [
